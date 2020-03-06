@@ -1,0 +1,17 @@
+We used the following approach : 
+
+We hashed the word vectors, so we are not using the exact word vector, but we are using presence of words as feature.
+There are large number of unique words, so we use only important words, where importance is described below.
+We divided the training file into two parts (let's call then A and B), one with target variable greater than 1, and other with less than 1.
+We find frequency of occurance of each word for both A and B separately.
+Word whose frequency is high in A and low in B, or vice versa, is considered to be important, as it contributes in rise and fall of the target.
+We set a threshold in frequency and filter out the words to form a vocabulary.
+So our text features are just a vocab dimension sized array consisting of 1 and 0, where 1 significe the presence of certain word.
+This text feature is still very sparse, wo we train an Auto Encoder to reduce the dimension for text features. We also use FC layers in parallel to decoder to predict the target variable. This ensures encoding of vector as well as makes it more relatable to target variable.
+Then we concatenate these features with market features and train different regressors to predict the target variable.
+We also find that merging the output on test data with train data, and then again retraining them increases the accuracy.
+
+train_features.csv consists of train data and its text features.
+test_features.csv consists of test data and its text features.
+
+For generating the output file, please run 'generate_output.py', though we have provided an output of this code 'output.csv'.
